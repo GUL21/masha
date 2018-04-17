@@ -19,7 +19,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
       if(isset($_POST['save']))
       {
 
-        mysql_query("UPDATE celebrations SET img='{$_POST['form_img']}', celebration='{$_POST['form_celebration']}', music='{$_POST['form_music']}', basket='{$_POST['form_basket']}', cel_visible='{$_POST['chk_visible']}' WHERE id='$id'");
+        mysql_query("UPDATE celebrations SET img='{$_POST['form_img']}', celebration='{$_POST['form_celebration']}', music='{$_POST['form_music']}', basket='{$_POST['form_basket']}', cel_visible='{$_POST['cel_visible']}' WHERE cel_id='$id'");
       }
 ?>
 <!DOCTYPE html>
@@ -80,7 +80,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
 </ul>   
 <ul id="chkbox">
   <li>
-    <input type="checkbox" name="cel_visible" id="chk_visible" '.$checked1.' value="1"><label for="cel_visible">Видимый праздник</label>
+    <input type="checkbox" name="cel_visible" id="chk_visible" '.$checked1.' value="1"><label for="chk_visible">Видимый праздник</label>
   </li>
 </ul> 
     <p><input type="submit" id="submit_save" name="save" value="Сохранить"/></p>     

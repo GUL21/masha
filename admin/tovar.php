@@ -97,7 +97,8 @@ $ratio = min($ratioh, $ratiow);
 // New dimensions 
 $width = intval($ratio*$width); 
 $height = intval($ratio*$height);    
-}else
+}
+else
 {
 $img_path = "./images/no-image-90.png";
 $width = 90;

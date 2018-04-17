@@ -15,11 +15,35 @@ if ($_SESSION['auth_admin'] == "yes_auth")
   include("include/db_connect.php");
   include("include/functions.php");
   $id = clear_string($_GET["id"]);
+  $action = clear_string($_GET["action"]);
+
+  if (isset($action))
+{
+   switch ($action) 
+   {
+
+      case 'delete':
+         
+         if (file_exists("../products/".$_GET["img"]))
+        {
+          unlink("../products/".$_GET["img"]);  
+        }
+            
+      break;
+
+  } 
+}
+
+  if (empty($_POST["upload_image"]))
+      {        
+      include("actions/upload-image.php");
+      unset($_POST["upload_image"]);           
+      } 
 
       if(isset($_POST['submit_save']))
       {
 
-        mysql_query("UPDATE table_products SET image='{$_POST['form_picture']}', title='{$_POST['form_title']}', price='{$_POST['form_price']}', type_tovara='{$_POST['form_category']}', visible='{$_POST['chk_visible']}' WHERE products_id='$id'");
+        mysql_query("UPDATE table_products SET title='{$_POST['form_title']}', price='{$_POST['form_price']}', type_tovara='{$_POST['form_category']}', visible='{$_POST['chk_visible']}' WHERE products_id='$id'");
       }
 ?>
 <!DOCTYPE html>
@@ -81,14 +105,44 @@ if ($_SESSION['auth_admin'] == "yes_auth")
               ';
 
                   if ($row["visible"] == '1') $checked1 = "checked";
+if  (strlen($row["image"]) > 0 && file_exists("../products/".$row["image"]))
+{
+$img_path = '../products/'.$row["image"];
+$max_width = 110; 
+$max_height = 110; 
+ list($width, $height) = getimagesize($img_path); 
+$ratioh = $max_height/$height; 
+$ratiow = $max_width/$width; 
+$ratio = min($ratioh, $ratiow); 
+// New dimensions 
+$width = intval($ratio*$width); 
+$height = intval($ratio*$height); 
 
+echo '
+<label class="stylelabel" >Изображение</label>
+<div id="baseimg">
+<img src="'.$img_path.'" width="'.$width.'" height="'.$height.'" />
+<a href="edit_product.php?id='.$row["products_id"].'&img='.$row["image"].'&action=delete" ></a>
+</div>
+
+';
+   
+}else
+{  
+echo '
+<label class="stylelabel" >Изображение</label>
+
+<div id="baseimg-upload">
+<input type="hidden" name="MAX_FILE_SIZE" value="5000000"/>
+<input type="file" name="upload_image" />
+
+</div>
+';
+}
                   echo '
                   </select>
           </li>
-          <li>
-            <label>Изображение</label>
-              <input type="text" name="form_picture" id="number" value="'.$row["image"].'">
-          </li>
+          
 </ul>   
 <ul id="chkbox">
   <li>

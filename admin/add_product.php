@@ -12,26 +12,27 @@ if ($_SESSION['auth_admin'] == "yes_auth")
   $_SESSION['urlpage'] = "<a href='index.php'>Главная</a><span id='slash'> \ </span><a href='tovar.php'>Товары</a><span id='slash'> \ </span><a>Добавить товар</a>";
   
   include("include/db_connect.php");
-  // include("include/functions.php");
-  // require "libs/DB.php";
+  include("include/functions.php");
 
-  //     if (isset($_POST['submit_add']))
-  //     {
-  //       $good = R::dispen
+  
 
-  //     }
-  //   }
       if(isset($_POST['submit_add']))
       {
-
-        $image = $_POST['form_picture'];
+        $type = $_POST['form_category'];
         $title = $_POST['form_title'];
         $price = $_POST['form_price'];
         $visible = $_POST["chk_visible"];
 
         mysql_query("INSERT INTO table_products 
-                     (image, title, price, visible)
-                     VALUES('$image', '$title', '$price', '$visible')");
+                     (title, price, visible, type_tovara)
+                     VALUES('$title', '$price', '$visible', '$type')");
+      }
+      
+      $id = mysql_insert_id();
+      if(empty($_POST["upload_image"]))
+      {
+        include("actions/upload-image.php");
+        unset($_POST["upload_image"]);
       }
 ?>
 <!DOCTYPE html>
@@ -53,7 +54,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
       <div id="block-parameters">
         <span id="all_goods">ДОБАВЛЕНИЕ ТОВАРА</span>
       </div>
-      <form method="POST" action="add_product.php">
+      <form enctype="multipart/form-data" method="POST" action="add_product.php">
         <ul id="edit-tovar">
           <li>
             <label>Название товара</label>
@@ -83,7 +84,9 @@ if ($_SESSION['auth_admin'] == "yes_auth")
               </select><br>
           <li>
             <label>Изображение</label>
-              <input type="file" name="form_picture" id="picture">
+            <div id="img-upload">
+              <input type="file" name="upload_image">
+            </div>
           </li>
 </ul>   
 <ul id="chkbox">

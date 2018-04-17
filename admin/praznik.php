@@ -78,7 +78,7 @@ $start = $page * $num - $num;
   
 if ($temp[0] > 0)   
 {
-$result = mysql_query("SELECT * FROM celebrations WHERE cel_visible='1' ORDER BY cel_id DESC LIMIT $start, $num",$link);
+$result = mysql_query("SELECT * FROM celebrations ORDER BY cel_id DESC LIMIT $start, $num",$link);
  
  If (mysql_num_rows($result) > 0)
 {

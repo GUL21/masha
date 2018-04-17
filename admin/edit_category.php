@@ -67,7 +67,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
                     do
                     {
                       echo '
-                        <option>'.$praz["celebration"].'</option>
+                        <option value="'.$praz["celebration"].'">'.$praz["celebration"].'</option>
                            ';    
                     }
                     while ($praz = mysql_fetch_array($praznik));
@@ -79,13 +79,12 @@ if ($_SESSION['auth_admin'] == "yes_auth")
                   if ($row["cat_visible"] == '1') $checked1 = "checked";
 
                   echo '
-                  </select>
           </li>
           <li>
             <label>Изображение</label>
               <input type="text" name="form_picture" id="number" value="'.$row["picture"].'">
               <br><br>
-              <input type="file" name="form_picture_new">
+              <input type="file" name="form_picture" id="inputik">
           </li>
 </ul>   
 <ul id="chkbox">
@@ -102,6 +101,12 @@ if ($_SESSION['auth_admin'] == "yes_auth")
               
     </div>  
   </div>
+  <script type="text/javascript">
+    function GetValue()
+    {
+      alert(document.getElementById('inputik').value);
+    } 
+  </script>
 </body>
 </html>
 <?php

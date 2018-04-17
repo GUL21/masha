@@ -78,7 +78,7 @@ $start = $page * $num - $num;
   
 if ($temp[0] > 0)   
 {
-$result = mysql_query("SELECT * FROM category WHERE cat_visible='1' ORDER BY id DESC LIMIT $start, $num",$link);
+$result = mysql_query("SELECT * FROM category ORDER BY id DESC LIMIT $start, $num",$link);
  
  If (mysql_num_rows($result) > 0)
 {

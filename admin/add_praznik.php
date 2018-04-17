@@ -29,7 +29,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
         $basket = $_POST['form_basket'];
         $vis = $_POST['vis'];
 
-        mysql_query("INSERT INTO celebraions 
+        mysql_query("INSERT INTO celebrations 
                      (img, celebration, music, basket, cel_visible)
                      VALUES('$img', '$celebration', '$music', '$basket', '$vis')");
       }

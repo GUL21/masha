@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MASHA</title>
+	<title>ЭLENA</title>
 	<meta charset="utf-8">
-	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="img/elena.ico" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
