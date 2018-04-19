@@ -14,12 +14,36 @@ if ($_SESSION['auth_admin'] == "yes_auth")
   
   include("include/db_connect.php");
   include("include/functions.php");
-  $id = clear_string($_GET["id"]);
+    $id = clear_string($_GET["id"]);
+  $action = clear_string($_GET["action"]);
+
+  if (isset($action))
+{
+   switch ($action) 
+   {
+
+      case 'delete':
+         
+         if (file_exists("../category/".$_GET["img"]))
+        {
+          unlink("../category/".$_GET["img"]);  
+        }
+            
+      break;
+
+  } 
+}
+
+  if (empty($_POST["cat_image"]))
+      {        
+      include("actions/upload-category.php");
+      unset($_POST["cat_image"]);           
+      } 
 
       if(isset($_POST['submit_save_cat']))
       {
 
-        mysql_query("UPDATE category SET picture='{$_POST['form_picture']}', type='{$_POST['form_type']}', praznik='{$_POST['form_praznik']}', cat_visible='{$_POST['chk_visible']}' WHERE id='$id'");
+        mysql_query("UPDATE category SET type='{$_POST['form_type']}', praznik='{$_POST['form_praznik']}', cat_visible='{$_POST['chk_visible']}' WHERE id='$id'");
       }
 ?>
 <!DOCTYPE html>
@@ -58,7 +82,9 @@ if ($_SESSION['auth_admin'] == "yes_auth")
           <li>
             <label>Праздник</label>
             <input type="text" name="form_praznik" id="number" value="'.$row["praznik"].'">
-              <select name="form_praznik" size="1">
+          </li>
+          <li>
+              <select name="form_praznik" size="5">
               ';
                   $praznik = mysql_query("SELECT celebration FROM celebrations WHERE celebration != ''",$link);
                   if (mysql_num_rows($praznik) > 0)
@@ -78,14 +104,42 @@ if ($_SESSION['auth_admin'] == "yes_auth")
 
                   if ($row["cat_visible"] == '1') $checked1 = "checked";
 
-                  echo '
-          </li>
-          <li>
-            <label>Изображение</label>
-              <input type="text" name="form_picture" id="number" value="'.$row["picture"].'">
-              <br><br>
-              <input type="file" name="form_picture" id="inputik">
-          </li>
+if  (strlen($row["picture"]) > 0 && file_exists("../category/".$row["picture"]))
+{
+$img_path = '../category/'.$row["picture"];
+$max_width = 110; 
+$max_height = 110; 
+ list($width, $height) = getimagesize($img_path); 
+$ratioh = $max_height/$height; 
+$ratiow = $max_width/$width; 
+$ratio = min($ratioh, $ratiow); 
+// New dimensions 
+$width = intval($ratio*$width); 
+$height = intval($ratio*$height); 
+
+echo '
+</li>
+<label class="stylelabel" >Изображение</label>
+<div id="baseimg">
+<img src="'.$img_path.'" width="'.$width.'" height="'.$height.'" />
+<a href="edit_category.php?id='.$row["id"].'&img='.$row["picture"].'&action=delete" ></a>
+</div>
+
+';
+   
+}else
+{  
+echo '
+<label class="stylelabel" >Изображение</label>
+
+<div id="baseimg-upload">
+<input type="hidden" name="MAX_FILE_SIZE" value="5000000"/>
+<input type="file" name="cat_image" />
+
+</div>
+';
+}
+echo'
 </ul>   
 <ul id="chkbox">
   <li>
@@ -101,12 +155,6 @@ if ($_SESSION['auth_admin'] == "yes_auth")
               
     </div>  
   </div>
-  <script type="text/javascript">
-    function GetValue()
-    {
-      alert(document.getElementById('inputik').value);
-    } 
-  </script>
 </body>
 </html>
 <?php

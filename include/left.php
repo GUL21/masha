@@ -13,7 +13,7 @@
 				  echo '
 				  <li>
 				  	<a href="view_content.php?celebration='.$row["celebration"].'">
-				  		<img src="img/'.$row["img"].'" width="300" height="60">
+				  		<img src="logos/'.$row["img"].'" width="300" height="60">
 				  	</a>
 				  </li>
 				  ';

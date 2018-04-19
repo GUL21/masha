@@ -313,7 +313,7 @@ a.pstr-prev:hover, a.pstr-next:hover
   margin-top: 20px;   
 }
 
-#edit-tovar input, #edit-props input
+#edit-tovar input
 {
   margin-left: 170px;
   width: 400px;
@@ -394,14 +394,15 @@ a.pstr-prev:hover, a.pstr-next:hover
 
 #edit-tovar > li > input#number
 {
-    width: 143px;
+    width: 163px;
     margin-right: -70px;
 }
 
 #edit-tovar > li > select
 {
-    width: 143px;
+    width: 170px;
     background-color: silver;
+    margin-top: -20px;
 }
 
 #picture
@@ -786,12 +787,13 @@ td
   margin-top: -100px;
 }
 #baseimg{
-  margin-top: 40px; 
+  margin-top: 60px; 
   height: 120px;
 }
 #baseimg img{
   float: left;
   margin-left: 15px;
+  margin-top: 20px;
 }
 #baseimg a{
     width: 16px;
@@ -799,5 +801,6 @@ td
     background: url(../images/action_delete.png);
     float: left;
     cursor: pointer;
-    margin-left: 5px;
+    margin-right: 50px;
+    position: absolute;
 }

@@ -12,26 +12,35 @@ if ($_SESSION['auth_admin'] == "yes_auth")
   $_SESSION['urlpage'] = "<a href='index.php'>Главная</a><span id='slash'> \ </span><a href='tovar.php'>Праздники</a><span id='slash'> \ </span><a>Добавить праздник</a>";
   
   include("include/db_connect.php");
-  // include("include/functions.php");
-  // require "libs/DB.php";
+  include("include/functions.php");
 
-  //     if (isset($_POST['submit_add']))
-  //     {
-  //       $good = R::dispen
-
-  //     }
-  //   }
       if(isset($_POST['submit_add_praz']))
       {
-        $img = $_POST['form_img'];
         $celebration = $_POST['form_celebration'];
-        $music = $_POST['form_music'];
-        $basket = $_POST['form_basket'];
         $vis = $_POST['vis'];
 
         mysql_query("INSERT INTO celebrations 
-                     (img, celebration, music, basket, cel_visible)
-                     VALUES('$img', '$celebration', '$music', '$basket', '$vis')");
+                     (celebration, cel_visible)
+                     VALUES('$celebration', '$vis')");
+      }
+
+      $id = mysql_insert_id();
+      if(empty($_POST["form_img"]))
+      {
+        include("actions/upload-logos.php");
+        unset($_POST["form_img"]);
+      }
+
+      if(empty($_POST["form_basket"]))
+      {
+        include("actions/upload-basket.php");
+        unset($_POST["form_basket"]);
+      }
+
+       if(empty($_POST["form_music"]))
+      {
+        include("actions/upload-music.php");
+        unset($_POST["form_music"]);
       }
 ?>
 <!DOCTYPE html>
@@ -53,7 +62,7 @@ if ($_SESSION['auth_admin'] == "yes_auth")
       <div id="block-parameters">
         <span id="all_goods">ДОБАВЛЕНИЕ ПРАЗДНИКА</span>
       </div>
-      <form method="POST" action="add_praznik.php">
+      <form method="POST" action="add_praznik.php" enctype="multipart/form-data">
         <ul id="edit-tovar">
           <li>
             <label>Название праздника</label>
@@ -61,15 +70,21 @@ if ($_SESSION['auth_admin'] == "yes_auth")
           </li>
           <li>
             <label>Изображение</label>
-              <input type="file" name="form_img" id="picture">
+              <div id="img-upload">
+                <input type="file" name="form_img">
+            </div>
           </li>
           <li>
             <label>Вид корзины</label>
-              <input type="file" name="form_basket" id="picture">
+              <div id="img-upload">
+                <input type="file" name="form_basket">
+            </div>
           </li>
           <li>
             <label>Музыка</label>
-              <input type="file" name="form_music" id="picture">
+              <div id="img-upload">
+                <input type="file" name="form_music">
+            </div>
           </li>
 </ul>   
 <ul id="chkbox">

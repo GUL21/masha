@@ -85,9 +85,9 @@ $result = mysql_query("SELECT * FROM celebrations ORDER BY cel_id DESC LIMIT $st
 $row = mysql_fetch_array($result);
 do
 {
-    if  (strlen($row["basket"]) > 0 && file_exists("../img/".$row["basket"]))
+    if  (strlen($row["basket"]) > 0 && file_exists("../basket/".$row["basket"]))
 {
-$img_path = '../img/'.$row["basket"];
+$img_path = '../basket/'.$row["basket"];
 $max_width = 160; 
 $max_height = 160; 
  list($width, $height) = getimagesize($img_path); 
@@ -108,7 +108,7 @@ $height = 164;
  <li>
  <p>'.$row["celebration"].'</p>
 <center>
- <img src="../img/'.$row["basket"].'" width="100">
+ <img src="../basket/'.$row["basket"].'" width="100">
 </center>
 <p align="center" class="link-action">
 <a class="green" href="edit_praznik.php?id='.$row["cel_id"].'">Изменить</a> | <a rel="praznik.php?'.$url.'id='.$row["cel_id"].'&action=delete" class="delete" >Удалить</a>

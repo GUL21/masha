@@ -9,10 +9,10 @@ if ($_SESSION['auth_admin'] == "yes_auth")
         unset($_SESSION['auth_admin']);
         header("Location: login.php");
     }
-  $_SESSION['urlpage'] = "<a href='index.php'>Главная</a><span id='slash'> \ </span><a href='tovar.php'>Товары</a><span id='slash'> \ </span><a>Добавить категорию</a>";
+  $_SESSION['urlpage'] = "<a href='index.php'>Главная</a><span id='slash'> \ </span><a href='cat.php'>Категории</a><span id='slash'> \ </span><a>Добавить категорию</a>";
   
   include("include/db_connect.php");
-  // include("include/functions.php");
+  include("include/functions.php");
   // require "libs/DB.php";
 
   //     if (isset($_POST['submit_add']))
@@ -23,14 +23,20 @@ if ($_SESSION['auth_admin'] == "yes_auth")
   //   }
       if(isset($_POST['submit_add_cat']))
       {
-        $picture = $_POST['form_picture'];
         $praznik = $_POST['form_praznik'];
         $type = $_POST['form_type'];
         $visible = $_POST["chk_visible"];
 
         mysql_query("INSERT INTO category 
-                     (picture, type, praznik, cat_visible)
-                     VALUES('$picture', '$type', '$praznik', '$visible')");
+                     (type, praznik, cat_visible)
+                     VALUES('$type', '$praznik', '$visible')");
+      }
+
+      $id = mysql_insert_id();
+      if(empty($_POST["cat_image"]))
+      {
+        include("actions/upload-category.php");
+        unset($_POST["cat_image"]);
       }
 ?>
 <!DOCTYPE html>
@@ -52,11 +58,11 @@ if ($_SESSION['auth_admin'] == "yes_auth")
       <div id="block-parameters">
         <span id="all_goods">ДОБАВЛЕНИЕ КАТЕГОРИИ</span>
       </div>
-      <form method="POST" action="add_category.php">
+      <form method="POST" action="add_category.php" enctype="multipart/form-data">
         <ul id="edit-tovar">
           <li>
             <label>Название категории</label>
-              <input type="text" name="form_praznik">
+              <input type="text" name="form_type">
           </li>
           <li>
             <label>Праздник</label>
@@ -78,7 +84,9 @@ if ($_SESSION['auth_admin'] == "yes_auth")
               </select><br>
           <li>
             <label>Изображение</label>
-              <input type="file" name="form_picture" id="picture">
+            <div id="img-upload">
+              <input type="file" name="cat_image">
+            </div>
           </li>
 </ul>   
 <ul id="chkbox">

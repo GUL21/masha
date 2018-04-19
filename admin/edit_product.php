@@ -86,7 +86,9 @@ if ($_SESSION['auth_admin'] == "yes_auth")
           <li>
             <label>Категория</label>
             <input type="text" name="form_category" id="number" value="'.$row["type_tovara"].'">
-              <select name="form_category" size="1">
+            </li>
+            <li>
+              <select name="form_category" size="5">
               ';
                   $category = mysql_query("SELECT type FROM category WHERE type != ''",$link);
                   if (mysql_num_rows($category) > 0)

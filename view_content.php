@@ -43,7 +43,7 @@ if (mysql_num_rows($result) > 0)
 
   echo '
   <audio src="sound/'.$row["music"].'" autoplay></audio>
-  <img src="img/'.$row["basket"].'" class="korzina">  
+  <img src="basket/'.$row["basket"].'" class="korzina">  
   ';     
  }
     while ($row = mysql_fetch_array($result));
